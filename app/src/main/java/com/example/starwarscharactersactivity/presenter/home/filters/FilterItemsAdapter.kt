@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.starwarscharactersactivity.R
 import com.example.starwarscharactersactivity.databinding.ItemsFilterBinding
 
-class FilterItemsAdapter(private val list: List<String>) :
+class FilterItemsAdapter(
+    private val list: List<String>,
+    private val optionSelected: OptionSelected,
+) :
     RecyclerView.Adapter<FilterItemsAdapter.ViewHolder>() {
     class ViewHolder(itemView: ItemsFilterBinding) : RecyclerView.ViewHolder(itemView.root) {
         val textView = itemView.tvItemsRv
@@ -24,9 +27,20 @@ class FilterItemsAdapter(private val list: List<String>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.textView.text = list[position]
+        holder.checkBox.setOnClickListener {
+            if (holder.checkBox.isChecked) {
+                optionSelected.optionSelected(holder.textView.text.toString())
+            } else {
+                optionSelected.optionSelected("")
+            }
+        }
     }
 
     override fun getItemCount(): Int {
         return list.size
     }
+}
+
+interface OptionSelected {
+    fun optionSelected(query: String)
 }

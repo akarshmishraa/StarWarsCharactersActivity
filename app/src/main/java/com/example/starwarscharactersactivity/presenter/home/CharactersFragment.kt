@@ -16,11 +16,12 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class CharactersFragment : Fragment(), ApiCallback {
+class CharactersFragment : Fragment(), ApiCallback{
     private lateinit var binding: FragmentCharactersBinding
     private val viewModel by lazy {
         ViewModelProvider(this)[HomeViewModel::class.java]
     }
+    private var isFilterApplied = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,7 +38,7 @@ class CharactersFragment : Fragment(), ApiCallback {
     }
 
     private fun initListeners() {
-        binding.btnFilter.setOnClickListener{
+        binding.btnFilter.setOnClickListener {
             val bottomSheetFragment = FilterBottomsheet()
             bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
         }
@@ -49,7 +50,7 @@ class CharactersFragment : Fragment(), ApiCallback {
         val layoutManager = GridLayoutManager(requireContext(), 2)
         recyclerView.layoutManager = layoutManager
         viewModel.states.observe(viewLifecycleOwner) {
-            recyclerView.adapter = states.value?.let { CharacterAdapter(it, this) }
+            recyclerView.adapter = states.value?.let { CharacterAdapter(it, isFilterApplied, this) }
         }
     }
 
@@ -63,12 +64,17 @@ class CharactersFragment : Fragment(), ApiCallback {
 
     private fun openMoviesFragment(position: Int) {
         val moviesFragment = MoviesFragment()
-        val transaction= parentFragmentManager.beginTransaction()
+        val transaction = parentFragmentManager.beginTransaction()
         val bundle = Bundle()
         bundle.putInt(MoviesFragment.NUMBER, position)
         moviesFragment.arguments = bundle
         transaction.replace(R.id.flContainer, moviesFragment)
         transaction.addToBackStack(null)
         transaction.commit()
+    }
+
+    fun filteredOptions(category: String, query: String) {
+        isFilterApplied = !(category.isEmpty() && query.isEmpty())
+        viewModel.onEvents(HomeScreenEvents.OnFilterApplied(category, query))
     }
 }

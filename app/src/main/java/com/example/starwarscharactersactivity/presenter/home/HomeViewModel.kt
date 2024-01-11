@@ -54,7 +54,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getCharacters(
+    private fun getCharacters(
         category: String? = states.value?.category,
         query: String = states.value?.searchQuery?.lowercase().toString(),
         fetchFromRemote: Boolean = false,

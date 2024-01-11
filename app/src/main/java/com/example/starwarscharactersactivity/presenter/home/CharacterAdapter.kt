@@ -9,6 +9,7 @@ import com.example.starwarscharactersactivity.databinding.ItemGridCharacterBindi
 
 class CharacterAdapter(
     private val homeScreenStates: HomeScreenStates,
+    private val isFilterApplied: Boolean,
     private val apiCallback: ApiCallback,
 ) :
     RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
@@ -22,6 +23,9 @@ class CharacterAdapter(
         val tvBirthYear = itemView.tvBirthYear
         val tvMass = itemView.tvMass
         val clCharacterView = itemView.clCharacterView
+        val tvEyeColor = itemView.tvEyeColor
+        val tvHairColor = itemView.tvHairColor
+        val tvGender = itemView.tvGender
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,7 +40,10 @@ class CharacterAdapter(
         holder.tvHeight.text = "Height : ${ itemList[position].height }"
         holder.tvBirthYear.text = "Birth Year : ${ itemList[position].birth_year }"
         holder.tvMass.text = "Mass: ${itemList[position].mass}"
-        if (position >= itemList.size - 1 && !homeScreenStates.endReached && !homeScreenStates.isLoading) {
+        holder.tvEyeColor.text = "Eye Color: ${itemList[position].eye_color}"
+        holder.tvHairColor.text = "Hair Color: ${itemList[position].hair_color}"
+        holder.tvGender.text = "Gender: ${itemList[position].gender}"
+        if (position >= itemList.size - 1 && !homeScreenStates.endReached && !homeScreenStates.isLoading && !isFilterApplied) {
             apiCallback.paginationRequired()
         }
         holder.clCharacterView.setOnClickListener{

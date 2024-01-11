@@ -1,13 +1,10 @@
 package com.example.starwarscharactersactivity.presenter.movieDetails
 
-import android.content.Context
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,23 +44,17 @@ class MoviesFragment : Fragment() {
         recyclerView.layoutManager = layoutManager
         viewModel.states.observe(viewLifecycleOwner) {
             if (it.error != null) {
-                Toast.makeText(requireContext(), getString(R.string.try_again), Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.try_again), Toast.LENGTH_SHORT)
+                    .show()
                 removeCurrentFragment()
             } else {
-                recyclerView.adapter = states.value?.let { MoviesAdapter(it) }
+                recyclerView.adapter = states.value?.let {it1 -> MoviesAdapter(it1) }
             }
         }
     }
 
     companion object {
         const val NUMBER = "number"
-    }
-
-    private fun isNetworkAvailable(): Boolean {
-        val connectivityManager =
-            getSystemService(requireContext(), ConnectivityManager::class.java)
-        val activeNetworkInfo = connectivityManager?.activeNetworkInfo
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
 
     private fun removeCurrentFragment() {
