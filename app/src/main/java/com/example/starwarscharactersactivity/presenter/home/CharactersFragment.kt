@@ -14,11 +14,11 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class CharactersFragment : Fragment() {
+class CharactersFragment : Fragment(), ApiCallback {
 
     private lateinit var binding: FragmentCharactersBinding
 
-    val viewModel by lazy {
+    private val viewModel by lazy {
         ViewModelProvider(this)[HomeViewModel::class.java]
     }
 
@@ -40,10 +40,12 @@ class CharactersFragment : Fragment() {
         val recyclerView = binding.rvCharacters
         val layoutManager = GridLayoutManager(requireContext(), 2)
         recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = CharacterAdapter(states.results)
+        viewModel.states.observe(viewLifecycleOwner) {
+            recyclerView.adapter = states.value?.let { CharacterAdapter(it, this) }
+        }
     }
 
-    companion object {
-
+    override fun paginationRequired() {
+        viewModel.onEvents(HomeScreenEvents.isRefreshing)
     }
 }

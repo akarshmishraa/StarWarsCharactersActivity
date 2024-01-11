@@ -5,10 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.starwarscharactersactivity.R
 import com.example.starwarscharactersactivity.databinding.ItemGridCharacterBinding
-import com.example.starwarscharactersactivity.domain.model.Results
 
-class CharacterAdapter(private val itemList: List<Results>) :
+class CharacterAdapter(
+    private val homeScreenStates: HomeScreenStates,
+    private val apiCallback: ApiCallback,
+) :
     RecyclerView.Adapter<CharacterAdapter.YourViewHolder>() {
+
+    private val itemList = homeScreenStates.results
 
     class YourViewHolder(itemView: ItemGridCharacterBinding) :
         RecyclerView.ViewHolder(itemView.root) {
@@ -29,9 +33,16 @@ class CharacterAdapter(private val itemList: List<Results>) :
         holder.tvBirthPlace.text = itemList[position].homeworld
         holder.tvBirthYear.text = itemList[position].birth_year
         holder.tvNumberOfFilms.text = itemList[position].films.size.toString()
+        if (position >= itemList.size - 1 && !homeScreenStates.endReached && !homeScreenStates.isLoading) {
+            apiCallback.paginationRequired()
+        }
     }
 
     override fun getItemCount(): Int {
         return itemList.size
     }
+}
+
+interface ApiCallback {
+    fun paginationRequired()
 }
