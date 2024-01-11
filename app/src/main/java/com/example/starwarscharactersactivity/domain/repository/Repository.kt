@@ -9,6 +9,7 @@ interface Repository {
 
     suspend fun getCharacters(
         page: Int,
+        category: String?,
         query: String,
         fetchFromRemote: Boolean
     ): Flow<Resource<List<Results>>>
@@ -17,11 +18,10 @@ interface Repository {
         number: String
     ): Resource<Results>
 
-    suspend fun getCharacterPlanets(
-        url: String
-    ): Resource<Planets>
-
     suspend fun getCharacterFilms(
         url: String
     ): Resource<Films>
+
+    suspend fun getHairColors(): Resource<List<String>>
+    suspend fun getEyeColors(): Resource<List<String>>
 }

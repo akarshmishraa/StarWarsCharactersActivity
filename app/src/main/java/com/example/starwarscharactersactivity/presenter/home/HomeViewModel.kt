@@ -42,16 +42,26 @@ class HomeViewModel @Inject constructor(
                     getCharacters()
                 }
             }
+
+            is HomeScreenEvents.OnFilterApplied -> {
+                states.value = states.value?.copy(category = events.category, searchQuery = events.query)
+                searchJob?.cancel()
+                searchJob = viewModelScope.launch {
+                    delay(500L)
+                    getCharacters()
+                }
+            }
         }
     }
 
     fun getCharacters(
+        category: String? = states.value?.category,
         query: String = states.value?.searchQuery?.lowercase().toString(),
         fetchFromRemote: Boolean = false,
     ) {
         viewModelScope.launch {
             states.value = states.value?.copy(isLoading = true)
-            repository.getCharacters(page = 1 + curPage, query, fetchFromRemote)
+            repository.getCharacters(page = 1 + curPage, category, query, fetchFromRemote)
                 .collect { resultsEntity ->
                     when (resultsEntity) {
                         is Resource.Success -> {

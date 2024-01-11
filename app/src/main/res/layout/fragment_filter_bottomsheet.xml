@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="5dp">
+
+
+        <TextView
+            android:id="@+id/tvFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/filter"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvHairColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="15dp"
+            android:text="@string/hair_color"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ViewHorizontal" />
+
+        <TextView
+            android:id="@+id/tvGender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="15dp"
+            android:text="@string/gender"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/tvHairColor"
+            app:layout_constraintTop_toBottomOf="@+id/tvHairColor" />
+
+        <TextView
+            android:id="@+id/tvEyeColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="15dp"
+            android:text="@string/eye_color"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/tvGender"
+            app:layout_constraintTop_toBottomOf="@+id/tvGender" />
+
+        <View
+            android:id="@+id/ViewHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvFilter" />
+
+        <View
+            android:id="@+id/ViewVertical"
+            android:layout_width="0.5dp"
+            android:layout_height="0dp"
+            android:background="@color/grey"
+            app:layout_constraintBottom_toTopOf="@id/llResetApply"
+            app:layout_constraintStart_toStartOf="@id/verticalBarrier"
+            app:layout_constraintTop_toTopOf="@id/ViewHorizontal" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/verticalBarrier"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            app:barrierDirection="end"
+            app:constraint_referenced_ids="tvGender,tvHairColor"
+            app:layout_constraintBottom_toTopOf="@id/llResetApply"
+            app:layout_constraintTop_toBottomOf="@id/ViewHorizontal" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvItemsFilterBottomSheet"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            app:layout_constraintBottom_toTopOf="@id/llResetApply"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/verticalBarrier"
+            app:layout_constraintTop_toBottomOf="@id/ViewHorizontal"
+            tools:listitem="@layout/items_filter" />
+
+        <LinearLayout
+            android:id="@+id/llResetApply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="300dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvGender"
+            app:layout_constraintVertical_bias="1.0">
+
+            <Button
+                android:id="@+id/btn_reset"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:checked="false"
+                android:gravity="center"
+                android:padding="4dp"
+                android:text="@string/reset"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_Apply"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:checked="true"
+                android:gravity="center"
+                android:padding="4dp"
+                android:text="@string/apply"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

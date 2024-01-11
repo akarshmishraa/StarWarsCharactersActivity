@@ -29,15 +29,29 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun getCharacters(
         page: Int,
+        category: String?,
         query: String,
         fetchFromRemote: Boolean,
     ): Flow<Resource<List<Results>>> {
         return flow {
             emit(Resource.Loading(true))
-            val localCache = dao.searchCharacters(query)
+            val localCache = when (category) {
+                "EYE_COLOR" -> {
+                    dao.searchEyeColor(query)
+                }
+                "GENDER" -> {
+                    dao.searchGender(query)
+                }
+                "HAIR_COLOR" -> {
+                    dao.searchHairColor(query)
+                }
+                else -> {
+                    dao.searchCharacters(query)
+                }
+            }
             emit(Resource.Success(localCache.map { it.toResults() }))
 
-            val isDBEmpty = localCache.isEmpty() && query.isBlank()
+            val isDBEmpty = localCache.isEmpty()
 
             val shouldJustLoadFromCache = !isDBEmpty && !fetchFromRemote
             if (shouldJustLoadFromCache) {
@@ -79,19 +93,6 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getCharacterPlanets(url: String): Resource<Planets> {
-        return try {
-            val response = api.getCharacterPlanet(url)
-            Resource.Success(response.toPlanetsDomain())
-        } catch (e: IOException) {
-            e.printStackTrace()
-            Resource.Error(e.localizedMessage)
-        } catch (e: HttpException) {
-            e.printStackTrace()
-            Resource.Error(e.message())
-        }
-    }
-
     override suspend fun getCharacterFilms(url: String): Resource<Films> {
         return try {
             val films = api.getCharacterFilms(url)
@@ -102,6 +103,23 @@ class RepositoryImpl @Inject constructor(
         } catch (e: HttpException) {
             e.printStackTrace()
             Resource.Error(e.message())
+        }
+    }
+
+    override suspend fun getHairColors(): Resource<List<String>> {
+        return try {
+            val results = dao.getHairColors()
+            Resource.Success(results)
+        }catch (e:Exception){
+            Resource.Error(e.localizedMessage)
+        }
+    }
+    override suspend fun getEyeColors(): Resource<List<String>> {
+        return try {
+            val results = dao.getEyeColors()
+            Resource.Success(results)
+        }catch (e:Exception){
+            Resource.Error(e.localizedMessage)
         }
     }
 }

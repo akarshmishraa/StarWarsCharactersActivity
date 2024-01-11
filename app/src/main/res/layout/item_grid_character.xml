@@ -9,7 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clCharacterView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="4dp"
         android:padding="8dp">
@@ -26,7 +26,7 @@
             tools:text="Character Name" />
 
         <TextView
-            android:id="@+id/tvBirthPlace"
+            android:id="@+id/tvHeight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -34,7 +34,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvCharacterName"
-            tools:text="Birth Place" />
+            tools:text="Height" />
 
         <TextView
             android:id="@+id/tvBirthYear"
@@ -44,11 +44,11 @@
             android:maxLines="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvBirthPlace"
+            app:layout_constraintTop_toBottomOf="@+id/tvHeight"
             tools:text="Birth Year" />
 
         <TextView
-            android:id="@+id/tvNumberOfFilms"
+            android:id="@+id/tvMass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -56,7 +56,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvBirthYear"
-            tools:text="2" />
+            tools:text="Mass" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

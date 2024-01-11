@@ -8,4 +8,5 @@ data class HomeScreenStates(
     val refresh: Boolean = false,
     val searchQuery: String = "",
     val endReached: Boolean = false,
+    val category : String? = null
 )

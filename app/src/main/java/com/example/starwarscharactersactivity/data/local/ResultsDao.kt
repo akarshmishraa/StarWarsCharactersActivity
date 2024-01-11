@@ -22,4 +22,32 @@ interface ResultsDao {
     """
     )
     suspend fun searchCharacters(query: String): List<ResultsEntity>
+
+    @Query(
+        """
+        SELECT * FROM resultsentity
+        WHERE LOWER(gender) LIKE '%'|| LOWER(:query) || '%'
+    """
+    )
+    suspend fun searchGender(query: String): List<ResultsEntity>
+    @Query(
+        """
+        SELECT * FROM resultsentity
+        WHERE LOWER(hair_color) LIKE '%'|| LOWER(:query) || '%'
+    """
+    )
+    suspend fun searchHairColor(query: String): List<ResultsEntity>
+    @Query(
+        """
+        SELECT * FROM resultsentity
+        WHERE LOWER(eye_color) LIKE '%'|| LOWER(:query) || '%'
+    """
+    )
+    suspend fun searchEyeColor(query: String): List<ResultsEntity>
+    @Query("SELECT DISTINCT hair_color FROM resultsentity")
+    suspend fun getHairColors(): List<String>
+    @Query("SELECT DISTINCT eye_color FROM resultsentity")
+    suspend fun getEyeColors(): List<String>
+
+
 }

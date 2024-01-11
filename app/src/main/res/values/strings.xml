@@ -5,5 +5,11 @@
     <string name="filters">Filters</string>
     <string name="sort">Sort</string>
     <string name="movies">Movies</string>
+    <string name="filter">Filter</string>
+    <string name="hair_color">Hair Color</string>
+    <string name="eye_color">Eye Color</string>
+    <string name="gender">Gender</string>
+    <string name="reset">Rest</string>
+    <string name="apply">Apply</string>
     <string name="try_again">Please check network connection and try again</string>
 </resources>

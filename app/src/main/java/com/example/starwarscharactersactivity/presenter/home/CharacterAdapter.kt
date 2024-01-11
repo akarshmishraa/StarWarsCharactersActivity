@@ -1,5 +1,6 @@
 package com.example.starwarscharactersactivity.presenter.home
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -17,9 +18,9 @@ class CharacterAdapter(
     class ViewHolder(itemView: ItemGridCharacterBinding) :
         RecyclerView.ViewHolder(itemView.root) {
         val tvCharacterName = itemView.tvCharacterName
-        val tvBirthPlace = itemView.tvBirthPlace
+        val tvHeight = itemView.tvHeight
         val tvBirthYear = itemView.tvBirthYear
-        val tvNumberOfFilms = itemView.tvNumberOfFilms
+        val tvMass = itemView.tvMass
         val clCharacterView = itemView.clCharacterView
     }
 
@@ -29,11 +30,12 @@ class CharacterAdapter(
         return ViewHolder(ItemGridCharacterBinding.bind(view))
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.tvCharacterName.text = itemList[position].name
-        holder.tvBirthPlace.text = itemList[position].homeworld
-        holder.tvBirthYear.text = itemList[position].birth_year
-        holder.tvNumberOfFilms.text = itemList[position].films.size.toString()
+        holder.tvCharacterName.text = "Name : ${ itemList[position].name }"
+        holder.tvHeight.text = "Height : ${ itemList[position].height }"
+        holder.tvBirthYear.text = "Birth Year : ${ itemList[position].birth_year }"
+        holder.tvMass.text = "Mass: ${itemList[position].mass}"
         if (position >= itemList.size - 1 && !homeScreenStates.endReached && !homeScreenStates.isLoading) {
             apiCallback.paginationRequired()
         }
