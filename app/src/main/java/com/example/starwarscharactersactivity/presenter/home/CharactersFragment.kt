@@ -10,14 +10,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.starwarscharactersactivity.R
 import com.example.starwarscharactersactivity.databinding.FragmentCharactersBinding
+import com.example.starwarscharactersactivity.presenter.movieDetails.MoviesFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class CharactersFragment : Fragment(), ApiCallback {
-
     private lateinit var binding: FragmentCharactersBinding
-
     private val viewModel by lazy {
         ViewModelProvider(this)[HomeViewModel::class.java]
     }
@@ -32,10 +31,10 @@ class CharactersFragment : Fragment(), ApiCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initAdapter()
+        initCharactersAdapter()
     }
 
-    private fun initAdapter() {
+    private fun initCharactersAdapter() {
         val states = viewModel.states
         val recyclerView = binding.rvCharacters
         val layoutManager = GridLayoutManager(requireContext(), 2)
@@ -47,5 +46,20 @@ class CharactersFragment : Fragment(), ApiCallback {
 
     override fun paginationRequired() {
         viewModel.onEvents(HomeScreenEvents.isRefreshing)
+    }
+
+    override fun characterClicked(position: Int) {
+        openMoviesFragment(position)
+    }
+
+    private fun openMoviesFragment(position: Int) {
+        val moviesFragment = MoviesFragment()
+        val transaction= parentFragmentManager.beginTransaction()
+        val bundle = Bundle()
+        bundle.putInt(MoviesFragment.NUMBER, position)
+        moviesFragment.arguments = bundle
+        transaction.replace(R.id.flContainer, moviesFragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 }

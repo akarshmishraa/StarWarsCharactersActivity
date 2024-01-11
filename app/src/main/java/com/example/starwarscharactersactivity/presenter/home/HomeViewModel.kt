@@ -16,7 +16,6 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val repository: Repository,
 ) : ViewModel() {
-
     private var curPage = 0
 
     var states = MutableLiveData<HomeScreenStates>().apply {
