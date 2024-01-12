@@ -7,7 +7,6 @@ import com.example.starwarscharactersactivity.domain.repository.Repository
 import com.example.starwarscharactersactivity.domain.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -34,26 +33,28 @@ class HomeViewModel @Inject constructor(
                 getCharacters(fetchFromRemote = true)
             }
 
-            is HomeScreenEvents.OnSearchQueryChanged -> {
-                states.value = states.value?.copy(searchQuery = events.query)
+            is HomeScreenEvents.OnFilterApplied -> {
+                states.value =
+                    states.value?.copy(category = events.category, searchQuery = events.query)
                 searchJob?.cancel()
                 searchJob = viewModelScope.launch {
-                    delay(500L)
                     getCharacters()
                 }
             }
 
-            is HomeScreenEvents.OnFilterApplied -> {
-                states.value = states.value?.copy(category = events.category, searchQuery = events.query)
-                searchJob?.cancel()
-                searchJob = viewModelScope.launch {
-                    delay(500L)
-                    getCharacters()
-                }
+            is HomeScreenEvents.OnSortingApplied -> {
+                sortCharacters(events.query)
             }
         }
     }
 
+    private fun sortCharacters(query: String) {
+        viewModelScope.launch {
+            repository.sortCharacters(query).data?.let {
+                states.value = states.value?.copy(results = it)
+            }
+        }
+    }
     private fun getCharacters(
         category: String? = states.value?.category,
         query: String = states.value?.searchQuery?.lowercase().toString(),

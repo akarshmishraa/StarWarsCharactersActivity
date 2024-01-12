@@ -24,4 +24,5 @@ interface Repository {
 
     suspend fun getHairColors(): Resource<List<String>>
     suspend fun getEyeColors(): Resource<List<String>>
+    suspend fun sortCharacters(query: String): Resource<List<Results>>
 }

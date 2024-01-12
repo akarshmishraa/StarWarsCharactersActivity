@@ -11,5 +11,10 @@
     <string name="gender">Gender</string>
     <string name="reset">Rest</string>
     <string name="apply">Apply</string>
+    <string name="sort_by">Sort by</string>
+    <string name="massL2H">Mass : Low to High</string>
+    <string name="massH2L">Mass : High to Low</string>
+    <string name="heightL2H">Height : Low to High</string>
+    <string name="heightH2L">Height : High to Low</string>
     <string name="try_again">Please check network connection and try again</string>
 </resources>

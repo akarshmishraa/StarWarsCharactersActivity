@@ -49,5 +49,18 @@ interface ResultsDao {
     @Query("SELECT DISTINCT eye_color FROM resultsentity")
     suspend fun getEyeColors(): List<String>
 
+    @Query("SELECT * FROM resultsentity\n" +
+            "ORDER BY mass ASC;\n")
+    suspend fun sortMassL2H(): List<ResultsEntity>
+    @Query("SELECT * FROM resultsentity\n" +
+            "ORDER BY mass DESC;\n")
+    suspend fun sortMassH2L(): List<ResultsEntity>
+
+    @Query("SELECT * FROM resultsentity\n" +
+            "ORDER BY height ASC;\n")
+    suspend fun sortHeightL2H(): List<ResultsEntity>
+    @Query("SELECT * FROM resultsentity\n" +
+            "ORDER BY height DESC;\n")
+    suspend fun sortHeightH2L(): List<ResultsEntity>
 
 }

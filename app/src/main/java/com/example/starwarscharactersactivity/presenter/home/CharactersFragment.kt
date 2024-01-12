@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.starwarscharactersactivity.R
 import com.example.starwarscharactersactivity.databinding.FragmentCharactersBinding
 import com.example.starwarscharactersactivity.presenter.home.filters.FilterBottomsheet
+import com.example.starwarscharactersactivity.presenter.home.sorting.SortingBottomsheet
 import com.example.starwarscharactersactivity.presenter.movieDetails.MoviesFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,8 +40,12 @@ class CharactersFragment : Fragment(), ApiCallback{
 
     private fun initListeners() {
         binding.btnFilter.setOnClickListener {
-            val bottomSheetFragment = FilterBottomsheet()
-            bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
+            val filterBottomsheet = FilterBottomsheet()
+            filterBottomsheet.show(parentFragmentManager, filterBottomsheet.tag)
+        }
+        binding.btnSort.setOnClickListener{
+            val sortingBottomsheet = SortingBottomsheet()
+            sortingBottomsheet.show(parentFragmentManager, sortingBottomsheet.tag)
         }
     }
 
@@ -76,5 +81,9 @@ class CharactersFragment : Fragment(), ApiCallback{
     fun filteredOptions(category: String, query: String) {
         isFilterApplied = !(category.isEmpty() && query.isEmpty())
         viewModel.onEvents(HomeScreenEvents.OnFilterApplied(category, query))
+    }
+    fun sortedOptions(query: String) {
+        isFilterApplied = true
+        viewModel.onEvents(HomeScreenEvents.OnSortingApplied(query))
     }
 }

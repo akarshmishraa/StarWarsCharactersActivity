@@ -1,5 +1,6 @@
 package com.example.starwarscharactersactivity.data.repository
 
+import com.example.starwarscharactersactivity.data.local.ResultsEntity
 import com.example.starwarscharactersactivity.data.local.StarDatabase
 import com.example.starwarscharactersactivity.data.remote.Api
 import com.example.starwarscharactersactivity.domain.model.Films
@@ -122,4 +123,20 @@ class RepositoryImpl @Inject constructor(
             Resource.Error(e.localizedMessage)
         }
     }
+
+    override suspend fun sortCharacters(query: String): Resource<List<Results>> {
+        return try {
+            val results : List<ResultsEntity> = when (query) {
+                "massLH" -> dao.sortMassL2H()
+                "massHL" -> dao.sortMassH2L()
+                "heightLH" -> dao.sortHeightL2H()
+                "heightHL" -> dao.sortHeightH2L()
+                else -> { emptyList() }
+            }
+            Resource.Success(results.map { it.toResults() })
+        }  catch (e:Exception){
+            Resource.Error(e.localizedMessage)
+        }
+    }
+
 }
