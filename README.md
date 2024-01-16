@@ -15,3 +15,7 @@ Description:
 - After clicking any of the items, it should show a list of movies that a particular character has done, which can also be in a Grid form using pagination if the data list is big.
 - Make the App offline-supported using Room Database.
 - Use Single Activity Multiple Fragments architecture.
+
+APIs used:
+https://swapi.dev/documentation
+https://swapi.dev/
